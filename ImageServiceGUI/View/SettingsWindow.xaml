@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="ImageServiceGUI.View.SettingsWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageServiceGUI.View"
+             mc:Ignorable="d" >
+    <StackPanel TextBlock.FontSize="30">
+        <TextBlock Foreground="Blue" FontWeight="Bold" HorizontalAlignment="Center" Margin="3" Padding="3">
+            Setting
+        </TextBlock>
+        <Grid TextBlock.FontSize="18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="3"/>
+                    <Setter Property="Margin" Value="3"/>
+                </Style>
+            </Grid.Resources>
+            <TextBlock Grid.Row="0" >Output Directory:</TextBlock>
+            <TextBlock x:Name="outputDirectory" Grid.Row="0" Grid.Column="1"></TextBlock>
+            <TextBlock Grid.Row="1" >Source Name:</TextBlock>
+            <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="1"></TextBlock>
+            <TextBlock Grid.Row="2">Log Name:</TextBlock>
+            <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="1" />
+            <TextBlock Grid.Row="3" Grid.RowSpan="2">Thumbnail Size:</TextBlock>
+            <TextBlock x:Name="thumbnailSize" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"></TextBlock>
+        </Grid>
+        <Button Content="Remove" FontSize="18"/>
+        <ListBox Height="200" Width="Auto"/>
+    </StackPanel>
+</UserControl>

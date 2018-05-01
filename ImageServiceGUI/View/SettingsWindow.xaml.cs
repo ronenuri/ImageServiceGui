@@ -13,17 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageServiceGUI
+namespace ImageServiceGUI.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SettingsWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SettingsWindow : UserControl
     {
-        public MainWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
-
+            this.DataContext = new SettingsViewModel();
         }
     }
 }

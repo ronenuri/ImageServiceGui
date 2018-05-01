@@ -8,6 +8,12 @@ namespace ImageServiceGUI
 {
     class LogViewModel
     {
+        private ILogModel logModel;
+
+        public LogViewModel()
+        {
+            this.logModel = new LogModel();
+        }
 
     }
 }

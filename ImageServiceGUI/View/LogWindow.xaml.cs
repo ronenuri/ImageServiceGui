@@ -10,19 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageServiceGUI
+namespace ImageServiceGUI.View
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for LogWindow.xaml
     /// </summary>
-    public partial class SettingsWindow : Window
+    public partial class LogWindow : UserControl
     {
-        public SettingsWindow()
+        public LogWindow()
         {
             InitializeComponent();
-            this.DataContext = new SettingsViewModel();
+            this.DataContext = new LogViewModel();
         }
     }
 }

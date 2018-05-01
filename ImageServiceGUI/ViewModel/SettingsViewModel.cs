@@ -8,6 +8,11 @@ namespace ImageServiceGUI
 {
     class SettingsViewModel
     {
+        private ISettingsModel settingModel;
        
+        public SettingsViewModel()
+        {
+            this.settingModel = new SettingsModel();
+        }
     }
 }
