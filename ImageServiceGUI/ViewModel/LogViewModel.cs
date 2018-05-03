@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ImageServiceGUI.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
-namespace ImageServiceGUI
+namespace ImageServiceGUI.ViewModel
 {
     class LogViewModel
     {
@@ -13,6 +16,7 @@ namespace ImageServiceGUI
         public LogViewModel()
         {
             this.logModel = new LogModel();
+           
         }
 
     }

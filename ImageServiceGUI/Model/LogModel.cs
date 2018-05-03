@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceGUI
+namespace ImageServiceGUI.Model
 {
     public class LogModel : ILogModel
     {

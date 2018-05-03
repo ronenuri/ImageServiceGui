@@ -23,21 +23,24 @@
             </Grid.ColumnDefinitions>
             <Grid.Resources>
                 <Style TargetType="TextBlock">
-                    <Setter Property="FontWeight" Value="Bold"/>
                     <Setter Property="Padding" Value="3"/>
                     <Setter Property="Margin" Value="3"/>
                 </Style>
             </Grid.Resources>
-            <TextBlock Grid.Row="0" >Output Directory:</TextBlock>
-            <TextBlock x:Name="outputDirectory" Grid.Row="0" Grid.Column="1"></TextBlock>
-            <TextBlock Grid.Row="1" >Source Name:</TextBlock>
-            <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="1"></TextBlock>
-            <TextBlock Grid.Row="2">Log Name:</TextBlock>
-            <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="1" />
-            <TextBlock Grid.Row="3" Grid.RowSpan="2">Thumbnail Size:</TextBlock>
-            <TextBlock x:Name="thumbnailSize" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2"></TextBlock>
+            <TextBlock Grid.Row="0" FontWeight="Bold" >Output Directory:</TextBlock>
+            <TextBlock x:Name="outputDirectory" Grid.Row="0" Grid.Column="1" Text="{Binding Output}" ></TextBlock>
+            <TextBlock Grid.Row="1" FontWeight="Bold" >Source Name:</TextBlock>
+            <TextBlock x:Name="sourceName" Grid.Row="1" Grid.Column="1" Text="{Binding SourceName}" ></TextBlock>
+            <TextBlock Grid.Row="2" FontWeight="Bold">Log Name:</TextBlock>
+            <TextBlock x:Name="logName" Grid.Row="2" Grid.Column="1" Text="{Binding LogName}" />
+            <TextBlock Grid.Row="3" Grid.RowSpan="2" FontWeight="Bold">Thumbnail Size:</TextBlock>
+            <TextBlock x:Name="thumbnailSize" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Text="{Binding ThumbnailSize}"></TextBlock>
         </Grid>
         <Button Content="Remove" FontSize="18"/>
-        <ListBox Height="200" Width="Auto"/>
+        <ListBox Height="200" Width="Auto"
+                ItemsSource="{Binding Handlers}"
+                SelectedValue="{Binding ChosenHandler}">
+            
+        </ListBox>
     </StackPanel>
 </UserControl>
