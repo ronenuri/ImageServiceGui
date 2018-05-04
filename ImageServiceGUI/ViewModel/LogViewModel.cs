@@ -16,7 +16,7 @@ namespace ImageServiceGUI.ViewModel
         public LogViewModel()
         {
             this.logModel = new LogModel();
-           
+           //check
         }
 
     }
