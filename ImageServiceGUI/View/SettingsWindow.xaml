@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ImageServiceGUI.View"
              mc:Ignorable="d" >
-    <StackPanel TextBlock.FontSize="30">
+    <StackPanel TextBlock.FontSize="30" Background="White">
         <TextBlock Foreground="Blue" FontWeight="Bold" HorizontalAlignment="Center" Margin="3" Padding="3">
             Setting
         </TextBlock>
@@ -24,7 +23,7 @@
             <Grid.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Padding" Value="3"/>
-                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="Margin" Value="5"/>
                 </Style>
             </Grid.Resources>
             <TextBlock Grid.Row="0" FontWeight="Bold" >Output Directory:</TextBlock>
@@ -36,11 +35,10 @@
             <TextBlock Grid.Row="3" Grid.RowSpan="2" FontWeight="Bold">Thumbnail Size:</TextBlock>
             <TextBlock x:Name="thumbnailSize" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Text="{Binding ThumbnailSize}"></TextBlock>
         </Grid>
-        <Button Content="Remove" FontSize="18"/>
-        <ListBox Height="200" Width="Auto"
+        <Button Content="Remove" FontSize="18" Margin="5,5,5,0" Command="{Binding RemoveCommand}"/>
+        <ListBox Height="200" Width="Auto" FontSize="20" Margin="5,0,5,5"
                 ItemsSource="{Binding Handlers}"
-                SelectedValue="{Binding ChosenHandler}">
-            
+                SelectedItem="{Binding ChosenHandler, Mode=TwoWay }">
         </ListBox>
     </StackPanel>
 </UserControl>
