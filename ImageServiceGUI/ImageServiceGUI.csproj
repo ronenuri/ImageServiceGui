@@ -69,7 +69,6 @@
     <Compile Include="Client.cs" />
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\IClient.cs" />
-    <Compile Include="View\ColorConverter.cs" />
     <Compile Include="View\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
@@ -130,5 +129,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

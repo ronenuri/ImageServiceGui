@@ -28,7 +28,7 @@ namespace ImageServiceGUI.Model
 
         public void GetConfig()
         {
-            //throw new NotImplementedException();
+            this.client.SendData();
         }
 
         public void RemoveHandler(string handlerPath)
