@@ -30,8 +30,42 @@ namespace ImageServiceGUI.Communication
         public void StartClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            this.client = new TcpClient();
+            TcpClient client = new TcpClient();
             client.Connect(ep);
+            Console.WriteLine("You are connected");
+            NetworkStream stream = client.GetStream();
+
+            Task writingTask = new Task(() =>
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    while (true)
+                    {
+
+                        // Send data to server
+                        string line = Console.ReadLine();
+                        writer.Write(line);
+                        writer.Flush();
+                    }
+                }
+            });
+
+            Task readingTask = new Task(() =>
+            {
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    while (true)
+                    {
+                        string result = reader.ReadString();
+                        //Console.WriteLine(result);
+                    }
+                }
+            });
+
+            writingTask.Start();
+            readingTask.Start();
+            writingTask.Wait();
+
         }
 
 
@@ -41,3 +75,4 @@ namespace ImageServiceGUI.Communication
         }
     }
 }
+
