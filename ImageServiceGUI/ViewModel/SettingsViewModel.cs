@@ -23,7 +23,10 @@ namespace ImageServiceGUI.ViewModel
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ObservableCollection<string> Handlers { get; private set; }
+        public ObservableCollection<string> Handlers {
+            get{ return this.settingModel.Handlers;}
+            set{ this.settingModel.Handlers = value; }
+        }
         private string m_chosenHandler;
         public string ChosenHandler
         {
@@ -34,31 +37,44 @@ namespace ImageServiceGUI.ViewModel
                 OnPropertyChanged("ChosenHandler");
             }
         }
-        public string Output { get; private set; }
-        public string SourceName { get; private set; }
-        public string LogName { get; private set; }
-        public int ThumbnailSize { get; private set; }
+        public string Output
+        {
+            get
+            {
+                return this.settingModel.Output;
+            }
+        }
+        public string SourceName
+        {
+            get
+            {
+                return this.settingModel.SourceName;
+            }
+        }
+        public string LogName
+        {
+            get
+            {
+                return this.settingModel.LogName;
+            }
+        }
+        public int ThumbnailSize
+        {
+            get
+            {
+                return this.settingModel.ThumbnailSize;
+            }
+        }
 
         public SettingsViewModel()
         {
-            this.settingModel = new SettingsModel();
-            Handlers = new ObservableCollection<string>();
-            //{
-            //    "PLEASE",
-                
-            //};
-            //Output = "out";
-            //SourceName = "source";
-            //LogName = "log";
-            //ThumbnailSize = 120;
-
-            //EventHandler sendCommand(object sender, messagerecivedArgs e)
-            //{
-
-            //}
+            //Handlers = new ObservableCollection<string>();
 
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             this.PropertyChanged += RemovePropertyChange;
+            this.settingModel = new SettingsModel();
+            //this.settingModel.PropertyChanged += PropertyChanged;
+            this.settingModel.GetConfig();
         }
 
         private void RemovePropertyChange(object sender, PropertyChangedEventArgs e)

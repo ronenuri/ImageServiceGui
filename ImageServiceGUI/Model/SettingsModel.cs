@@ -1,4 +1,5 @@
 ﻿using ImageServiceGUI.Communication;
+using ImageServiceGUI.Infastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -21,20 +22,23 @@ namespace ImageServiceGUI.Model
         public SettingsModel()
         {
             this.client = Client.Instance;
-            this.GetConfig();
 
             //this.client
 
-            this.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
-       {
-           NotifyPropertyChanged(e.PropertyName);
-       };
+            //this.PropertyChanged += NotifyConfigRecieved;
+            this.client.SettingsConfigRecieved += SettingsConfigRecieved;
+            //this.GetConfig();
         }
 
+        //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
+        //{
+        //    NotifyPropertyChanged(e.PropertyName);
+        //}
 
-        public void SettingsConfigRecieved(object sender, string msg)
+        public void SettingsConfigRecieved(object sender, SettingsEventArgs msg)
         {
-            JObject obj = JObject.Parse(msg);
+            string message = msg.Message;
+            JObject obj = JObject.Parse(message);
             Output = obj["Output"].ToString();
             SourceName = obj["SourceName"].ToString();
             LogName = obj["LogName"].ToString();
