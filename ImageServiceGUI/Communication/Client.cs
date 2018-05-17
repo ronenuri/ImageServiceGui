@@ -14,7 +14,7 @@ namespace ImageServiceGUI.Communication
 {
     public class Client : IClient
     {
-        private static readonly Client instance = new Client();
+        private static Client instance;
         private Client() { }
         private TcpClient client;
 
@@ -28,7 +28,7 @@ namespace ImageServiceGUI.Communication
             {
                 if (instance == null)
                 {
-                    //instance = new Client();
+                    instance = new Client();
                     instance.StartClient();
                 }
                 return instance;

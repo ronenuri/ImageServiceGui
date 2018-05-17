@@ -42,21 +42,15 @@ namespace ImageServiceGUI.ViewModel
         public SettingsViewModel()
         {
             this.settingModel = new SettingsModel();
-            Handlers = new ObservableCollection<string>
-            {
-                "PLEASE",
-                "FUCKING",
-                "WORK",
-                "THANK YOU",
-                "VERY",
-                "LONG",
-                "FOR",
-                "SCROLLING"
-            };
-            Output = "out";
-            SourceName = "source";
-            LogName = "log";
-            ThumbnailSize = 120;
+            Handlers = new ObservableCollection<string>();
+            //{
+            //    "PLEASE",
+                
+            //};
+            //Output = "out";
+            //SourceName = "source";
+            //LogName = "log";
+            //ThumbnailSize = 120;
 
             //EventHandler sendCommand(object sender, messagerecivedArgs e)
             //{

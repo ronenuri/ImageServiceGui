@@ -51,7 +51,8 @@ namespace ImageServiceGUI.Model
         }
         public void GetConfig()
         {
-            this.client.SendData("");
+            int msg = (int)Infrastructure.Enums.CommandEnum.GetConfigCommand;
+            this.client.SendData(msg.ToString());
         }
 
         public void RemoveHandler(string handlerPath)
