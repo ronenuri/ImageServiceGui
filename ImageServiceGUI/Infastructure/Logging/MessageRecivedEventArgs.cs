@@ -8,7 +8,13 @@ namespace ImageServiceGUI.Infastructure.Logging
 {
     public class MessageRecievedEventArgs : EventArgs
     {
-        public MessageTypeEnum Status { get; set; }
+        public int Status { get; set; }
         public string Message { get; set; }
+        public MessageRecievedEventArgs (int stat, string msg)
+        {
+            this.Status = stat;
+            this.Message = msg;
+        }
+
     }
 }

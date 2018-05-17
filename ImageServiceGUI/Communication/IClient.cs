@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImageServiceGUI.Infastructure;
+using ImageServiceGUI.Infastructure.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +11,9 @@ namespace ImageServiceGUI.Communication
     interface IClient
     {
         void SendData(string data);
+
+        event EventHandler<MessageRecievedEventArgs> LoggerCommandRecievd;
+        event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
+        event EventHandler<SettingsEventArgs> SettingsCloseHandlerRecieved;
     }
 }

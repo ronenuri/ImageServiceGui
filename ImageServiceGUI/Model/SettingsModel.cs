@@ -1,4 +1,6 @@
 ﻿using ImageServiceGUI.Communication;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,21 +16,36 @@ namespace ImageServiceGUI.Model
 {
     class SettingsModel : ISettingsModel, INotifyPropertyChanged
     {
-        private IClient client;
+        private Client client;
 
         public SettingsModel()
         {
-            this.client = Communication.Client.Instance;
+            this.client = Client.Instance;
             this.GetConfig();
+
+            //this.client
+
             this.PropertyChanged +=
        delegate (Object sender, PropertyChangedEventArgs e) {
            NotifyPropertyChanged(e.PropertyName);
        };
         }
+        
 
+        public void SettingsConfigRecieved(object sender, string msg)
+        {
+            JObject obj = JObject.Parse(msg);
+            Output = obj[""].ToString();
+            SourceName = obj[""].ToString();
+            LogName = obj[""].ToString();
+            int.TryParse(obj[""].ToString(),out int x);
+            ThumbnailSize = x;
+
+            JsonConvert.DeserializeObject(obj["handlersPaths"].ToString());
+        }
         public void GetConfig()
         {
-            this.client.SendData();
+            this.client.SendData("");
         }
 
         public void RemoveHandler(string handlerPath)
