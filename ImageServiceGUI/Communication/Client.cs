@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ImageServiceGUI.Infastructure;
+using ImageServiceGUI.Infastructure.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,87 +10,106 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace ImageServiceGUI.Communication
 {
     public class Client : IClient
     {
-        private static Client instance;
+        private static readonly Client instance = new Client();
         private Client() { }
         private TcpClient client;
-        private NetworkStream stream;
+
+        public event EventHandler<MessageRecievedEventArgs> LoggerCommandRecievd;
+        public event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
+        public event EventHandler<SettingsEventArgs> SettingsCloseHandlerRecieved;
+
         public static Client Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new Client();
+                    //instance = new Client();
                     instance.StartClient();
                 }
                 return instance;
             }
         }
 
-        public event GotSettingData(object sender, string e)
-        {
-            
-        }
-
-        public EventHandler GotLogData(object sender, string e)
-        {
-
-        }
-
-        private void StartClient()
+        public void StartClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             this.client = new TcpClient();
             client.Connect(ep);
-            this.stream = client.GetStream();
-            ReadData();
-        }
+            //Console.WriteLine("You are connected");
+            NetworkStream stream = client.GetStream();
 
-        private void ReadData()
-        {
-            Task readTask = new Task(() =>
+            //Task writingTask = new Task(() =>
+            //{
+            //    using (BinaryWriter writer = new BinaryWriter(stream))
+            //    {
+            //        while (true)
+            //        {
+
+            //            // Send data to server
+            //            string line = Console.ReadLine();
+            //            writer.Write(line);
+            //            writer.Flush();
+            //        }
+            //    }
+            //});
+
+            Task readingTask = new Task(() =>
             {
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     while (true)
                     {
-                        var result = reader.ReadString();
-                        JObject details = JObject.Parse(result);
-                        if (details.GetValue(CommandEnum) == Infrastructure.Enums.CommandEnum.GetConfigCommand)
-                        {
-                            // ACTIVATE SETTING EVENT
-                        }
-                        else if (details.GetValue(CommandEnum) == Infrastructure.Enums.CommandEnum.LogCommand)
-                        {
-
-                        }
+                        string result = reader.ReadString();
+                        ParseAndSend(result);
                     }
                 }
             });
-            readTask.Start();
-            
+
+            readingTask.Start();
+            //writingTask.Wait();
+
         }
 
 
         public void SendData(string data)
         {
-            Task sendData = new Task(() =>
+            NetworkStream stream = client.GetStream();
+            Task writingTask = new Task(() =>
             {
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    while (true)
-                    {
+                        // Send data to server
                         writer.Write(data);
                         writer.Flush();
-                    }
                 }
             });
-            sendData.Start();
+            writingTask.Start();
+        }
+
+        public void ParseAndSend(string msg)
+        {
+            JObject obj = JObject.Parse(msg);
+            int.TryParse(obj["CommandEnum"].ToString(), out int x);
+            if (x == (int)Infrastructure.Enums.CommandEnum.GetConfigCommand)
+            {
+                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.GetConfigCommand, msg);
+                SettingsConfigRecieved?.Invoke(this, e);
+            }
+            else if (x == (int)Infrastructure.Enums.CommandEnum.LogCommand)
+            {
+                MessageRecievedEventArgs e = new MessageRecievedEventArgs((int)Infrastructure.Enums.CommandEnum.LogCommand, msg);
+                LoggerCommandRecievd?.Invoke(this, e);
+            } else if(x == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
+            {
+                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.CloseCommand, msg);
+                SettingsCloseHandlerRecieved?.Invoke(this, e);
+            }
         }
     }
 }
+
