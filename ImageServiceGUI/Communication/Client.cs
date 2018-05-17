@@ -17,6 +17,7 @@ namespace ImageServiceGUI.Communication
         private static Client instance;
         private Client() { }
         private TcpClient client;
+        private NetworkStream stream;
 
         public event EventHandler<MessageRecievedEventArgs> LoggerCommandRecievd;
         public event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
@@ -40,27 +41,11 @@ namespace ImageServiceGUI.Communication
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             this.client = new TcpClient();
             client.Connect(ep);
-            //Console.WriteLine("You are connected");
-            NetworkStream stream = client.GetStream();
-
-            //Task writingTask = new Task(() =>
-            //{
-            //    using (BinaryWriter writer = new BinaryWriter(stream))
-            //    {
-            //        while (true)
-            //        {
-
-            //            // Send data to server
-            //            string line = Console.ReadLine();
-            //            writer.Write(line);
-            //            writer.Flush();
-            //        }
-            //    }
-            //});
+            this.stream = client.GetStream();
 
             Task readingTask = new Task(() =>
             {
-                using (BinaryReader reader = new BinaryReader(stream))
+                BinaryReader reader = new BinaryReader(stream);
                 {
                     while (true)
                     {
@@ -71,17 +56,15 @@ namespace ImageServiceGUI.Communication
             });
 
             readingTask.Start();
-            //writingTask.Wait();
 
         }
 
 
         public void SendData(string data)
         {
-            NetworkStream stream = client.GetStream();
             Task writingTask = new Task(() =>
             {
-                using (BinaryWriter writer = new BinaryWriter(stream))
+                BinaryWriter writer = new BinaryWriter(this.stream);
                 {
                         // Send data to server
                         writer.Write(data);
