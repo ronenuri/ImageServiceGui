@@ -16,13 +16,13 @@ namespace ImageServiceGUI.ViewModel
             this.mainWindowModel = new MainWindowModel();
         }
 
-        bool IsConnected
-        {
-            get
-            {
-                return this.mainWindowModel.isConnected;
-            }
-        }
+        //bool IsConnected
+        //{
+        //    get
+        //    {
+        //        return this.mainWindowModel.isConnected;
+        //    }
+        //}
    
     }
 }

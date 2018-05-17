@@ -16,13 +16,13 @@ namespace ImageServiceGUI.Model
             this.client = Client.Instance;
         }
 
-        bool IsConnected
-        {
-            get
-            {
-                return this.client.isConnected;
-            }
-        }
+        //bool IsConnected
+        //{
+        //    get
+        //    {
+        //        return this.client.isConnected;
+        //    }
+        //}
 
     }
 }
