@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,16 @@ namespace ImageServiceGUI.Communication
             }
         }
 
+        public event GotSettingData(object sender, string e)
+        {
+            
+        }
+
+        public EventHandler GotLogData(object sender, string e)
+        {
+
+        }
+
         private void StartClient()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
@@ -46,8 +57,16 @@ namespace ImageServiceGUI.Communication
                 {
                     while (true)
                     {
-                        string result = reader.ReadString();
-                        
+                        var result = reader.ReadString();
+                        JObject details = JObject.Parse(result);
+                        if (details.GetValue(CommandEnum) == Infrastructure.Enums.CommandEnum.GetConfigCommand)
+                        {
+                            // ACTIVATE SETTING EVENT
+                        }
+                        else if (details.GetValue(CommandEnum) == Infrastructure.Enums.CommandEnum.LogCommand)
+                        {
+
+                        }
                     }
                 }
             });

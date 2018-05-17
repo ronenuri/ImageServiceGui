@@ -58,11 +58,6 @@ namespace ImageServiceGUI.ViewModel
             LogName = "log";
             ThumbnailSize = 120;
 
-            EventHandler sendCommand(object sender, messagerecivedArgs e)
-            {
-
-            }
-
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             this.PropertyChanged += RemovePropertyChange;
         }

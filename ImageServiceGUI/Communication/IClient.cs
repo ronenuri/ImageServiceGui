@@ -9,5 +9,7 @@ namespace ImageServiceGUI.Communication
     interface IClient
     {
         void SendData(string data);
+
+        EventHandler GotSettingData(object sender, string e);
     }
 }

@@ -19,6 +19,7 @@ namespace ImageServiceGUI.Model
         public SettingsModel()
         {
             this.client = Communication.Client.Instance;
+            //client.GotSettingData += this.RecivedConfig;
             this.GetConfig();
             this.PropertyChanged +=
        delegate (Object sender, PropertyChangedEventArgs e) {
@@ -28,7 +29,12 @@ namespace ImageServiceGUI.Model
 
         public void GetConfig()
         {
-            this.client.SendData();
+
+        }
+
+        public void RecivedConfig(object sender, string e)
+        {
+            //
         }
 
         public void RemoveHandler(string handlerPath)
