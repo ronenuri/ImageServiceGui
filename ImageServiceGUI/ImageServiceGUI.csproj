@@ -69,6 +69,10 @@
     <Compile Include="Client.cs" />
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\IClient.cs" />
+		<Compile Include="Infastructure\Enums\Enums.cs" />
+    <Compile Include="Infastructure\Logging\MessageRecivedEventArgs.cs" />
+    <Compile Include="Infastructure\Logging\MessageTypeEnum.cs" />
+	 <Compile Include="View\ColorConverter.cs" />
     <Compile Include="View\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
