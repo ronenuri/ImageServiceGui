@@ -25,23 +25,29 @@ namespace ImageServiceGUI.Model
 
             //this.client
 
-            this.PropertyChanged +=
-       delegate (Object sender, PropertyChangedEventArgs e) {
+            this.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
+       {
            NotifyPropertyChanged(e.PropertyName);
        };
         }
-        
+
 
         public void SettingsConfigRecieved(object sender, string msg)
         {
             JObject obj = JObject.Parse(msg);
-            Output = obj[""].ToString();
-            SourceName = obj[""].ToString();
-            LogName = obj[""].ToString();
-            int.TryParse(obj[""].ToString(),out int x);
+            Output = obj["Output"].ToString();
+            SourceName = obj["SourceName"].ToString();
+            LogName = obj["LogName"].ToString();
+            int.TryParse(obj["thumbnailSize"].ToString(), out int x);
             ThumbnailSize = x;
 
-            JsonConvert.DeserializeObject(obj["handlersPaths"].ToString());
+            string[] handlersPath = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
+            ObservableCollection<string> list = new ObservableCollection<string>();
+            foreach (string str in handlersPath)
+            {
+                list.Add(str);
+            }
+            Handlers = list;
         }
         public void GetConfig()
         {
