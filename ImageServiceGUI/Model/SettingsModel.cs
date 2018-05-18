@@ -23,11 +23,15 @@ namespace ImageServiceGUI.Model
         {
             this.client = Client.Instance;
 
-            //this.client
-
             //this.PropertyChanged += NotifyConfigRecieved;
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
             //this.GetConfig();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void NotifyPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
@@ -64,11 +68,7 @@ namespace ImageServiceGUI.Model
             throw new NotImplementedException();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
+
 
         private ObservableCollection<string> m_handlers;
         public ObservableCollection<string> Handlers
@@ -76,7 +76,7 @@ namespace ImageServiceGUI.Model
             get { return m_handlers; }
             set
             {
-                m_handlers = value;
+                m_handlers = new ObservableCollection<string>(value);
                 NotifyPropertyChanged("Handlers");
             }
         }

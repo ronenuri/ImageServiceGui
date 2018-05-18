@@ -25,8 +25,9 @@ namespace ImageServiceGUI.ViewModel
 
         public ObservableCollection<string> Handlers {
             get{ return this.settingModel.Handlers;}
-            set{ this.settingModel.Handlers = value; }
+            set { this.settingModel.Handlers = new ObservableCollection<string>(value);}
         }
+
         private string m_chosenHandler;
         public string ChosenHandler
         {
@@ -68,13 +69,20 @@ namespace ImageServiceGUI.ViewModel
 
         public SettingsViewModel()
         {
-            //Handlers = new ObservableCollection<string>();
 
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            this.PropertyChanged += RemovePropertyChange;
             this.settingModel = new SettingsModel();
-            //this.settingModel.PropertyChanged += PropertyChanged;
+            this.settingModel.PropertyChanged += OnPropertyChanged;
+
+            //Handlers = new ObservableCollection<string>();
+            //this.Handlers.Add("ssdsad");
             this.settingModel.GetConfig();
+            this.PropertyChanged += RemovePropertyChange;
+        }
+
+        public void updateHandler(object sender, PropertyChangedEventArgs e)
+        {
+            this.Handlers = e.
         }
 
         private void RemovePropertyChange(object sender, PropertyChangedEventArgs e)
