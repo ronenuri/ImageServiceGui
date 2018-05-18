@@ -15,6 +15,7 @@ namespace ImageServiceGUI.Model
         string SourceName { get; }
         string LogName { get; }
         int ThumbnailSize { get; }
+        string ChosenHandler { get; set; }
         ObservableCollection<string> Handlers { get; set; } 
 
 

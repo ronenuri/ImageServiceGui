@@ -34,11 +34,11 @@ namespace ImageServiceGUI.ViewModel
         private string m_chosenHandler;
         public string ChosenHandler
         {
-            get { return m_chosenHandler; }
+            get { return settingModel.ChosenHandler; }
             set
             {
-                m_chosenHandler = value;
-                NotifyPropertyChanged("ChosenHandler");
+                settingModel.ChosenHandler = value;
+                //NotifyPropertyChanged("ChosenHandler");
             }
         }
 
@@ -93,8 +93,8 @@ namespace ImageServiceGUI.ViewModel
 
         private void OnRemove(object obj)
         {
-            //this.settingModel.RemoveHandler(this.ChosenHandler);
-            this.Handlers.Remove(this.ChosenHandler);
+            this.settingModel.RemoveHandler(this.ChosenHandler);
+            //this.Handlers.Remove(this.ChosenHandler);
         }
 
         private bool CanRemove(object obj)
