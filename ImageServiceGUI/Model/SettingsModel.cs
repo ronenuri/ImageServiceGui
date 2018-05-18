@@ -52,7 +52,10 @@ namespace ImageServiceGUI.Model
             ObservableCollection<string> list = new ObservableCollection<string>();
             foreach (string str in handlerPaths)
             {
+                App.Current.Dispatcher.Invoke((Action) delegate {
                 Handlers.Add(str);
+
+                });
             }
             //Handlers.Add("str");
 
