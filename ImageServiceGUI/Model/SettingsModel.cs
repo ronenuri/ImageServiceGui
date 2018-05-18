@@ -30,6 +30,7 @@ namespace ImageServiceGUI.Model
 
             //this.PropertyChanged += NotifyConfigRecieved;
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
+            this.client.SettingsCloseHandlerRecieved += HandlerRemoveRecived;
             //this.GetConfig();
         }
 
@@ -54,13 +55,25 @@ namespace ImageServiceGUI.Model
             {
                 App.Current.Dispatcher.Invoke((Action) delegate {
                 Handlers.Add(str);
-
                 });
             }
             //Handlers.Add("str");
 
             //Handlers = list;
         }
+
+        public void HandlerRemoveRecived(object sender, SettingsEventArgs e)
+        {
+            if (e.Message == this.ChosenHandler)
+            {
+                App.Current.Dispatcher.Invoke((Action)delegate {
+                    Handlers.Remove(e.Message);
+                });
+                NotifyPropertyChanged("Handlers");
+            }
+
+        }
+
         public void GetConfig()
         {
             int msg = (int)Infrastructure.Enums.CommandEnum.GetConfigCommand;
@@ -69,8 +82,11 @@ namespace ImageServiceGUI.Model
 
         public void RemoveHandler(string handlerPath)
         {
-            throw new NotImplementedException();
+            int msg = (int)Infrastructure.Enums.CommandEnum.CloseCommand;
+            this.client.SendData(msg.ToString());
+
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string name)
@@ -86,6 +102,17 @@ namespace ImageServiceGUI.Model
             {
                 m_handlers = value;
                 NotifyPropertyChanged("Handlers");
+            }
+        }
+
+        private string m_chosenHandler;
+        public string ChosenHandler
+        {
+            get { return m_chosenHandler; }
+            set
+            {
+                m_chosenHandler = value;
+                NotifyPropertyChanged("ChosenHandler");
             }
         }
 

@@ -87,7 +87,8 @@ namespace ImageServiceGUI.Communication
             {
                 MessageRecievedEventArgs e = new MessageRecievedEventArgs((int)Infrastructure.Enums.CommandEnum.LogCommand, msg);
                 LoggerCommandRecievd?.Invoke(this, e);
-            } else if(x == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
+            }
+            else if(x == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
             {
                 SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.CloseCommand, msg);
                 SettingsCloseHandlerRecieved?.Invoke(this, e);
