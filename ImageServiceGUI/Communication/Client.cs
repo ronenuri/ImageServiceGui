@@ -20,7 +20,7 @@ namespace ImageServiceGUI.Communication
         private TcpClient client;
         private NetworkStream stream;
 
-        public event EventHandler<MessageRecievedEventArgs> LoggerCommandRecievd;
+        public event EventHandler<SettingsEventArgs> LoggerCommandRecievd;
         public event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
         public event EventHandler<SettingsEventArgs> SettingsCloseHandlerRecieved;
 
@@ -85,7 +85,7 @@ namespace ImageServiceGUI.Communication
             }
             else if (x == (int)Infrastructure.Enums.CommandEnum.LogCommand)
             {
-                MessageRecievedEventArgs e = new MessageRecievedEventArgs((int)Infrastructure.Enums.CommandEnum.LogCommand, msg);
+                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.LogCommand, msg);
                 LoggerCommandRecievd?.Invoke(this, e);
             } else if(x == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
             {
