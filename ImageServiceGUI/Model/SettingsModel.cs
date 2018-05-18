@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Model
@@ -22,16 +23,14 @@ namespace ImageServiceGUI.Model
         public SettingsModel()
         {
             this.client = Client.Instance;
+            this.m_handlers = new ObservableCollection<string>();
+            //m_handlers.Add("SHIT");
+
+            //this.client
 
             //this.PropertyChanged += NotifyConfigRecieved;
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
             //this.GetConfig();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
@@ -49,13 +48,15 @@ namespace ImageServiceGUI.Model
             int.TryParse(obj["thumbnailSize"].ToString(), out int x);
             ThumbnailSize = x;
 
-            string[] handlersPath = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
+            string[] handlerPaths = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
             ObservableCollection<string> list = new ObservableCollection<string>();
-            foreach (string str in handlersPath)
+            foreach (string str in handlerPaths)
             {
-                list.Add(str);
+                Handlers.Add(str);
             }
-            Handlers = list;
+            //Handlers.Add("str");
+
+            //Handlers = list;
         }
         public void GetConfig()
         {
@@ -68,7 +69,11 @@ namespace ImageServiceGUI.Model
             throw new NotImplementedException();
         }
 
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void NotifyPropertyChanged(string name)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         private ObservableCollection<string> m_handlers;
         public ObservableCollection<string> Handlers
@@ -76,7 +81,7 @@ namespace ImageServiceGUI.Model
             get { return m_handlers; }
             set
             {
-                m_handlers = new ObservableCollection<string>(value);
+                m_handlers = value;
                 NotifyPropertyChanged("Handlers");
             }
         }

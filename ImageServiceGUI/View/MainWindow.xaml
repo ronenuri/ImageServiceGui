@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="Auto" Width="Auto">
     <Grid>
+        <Button Background="White">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                            <Setter Property="Background" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <TabControl>
             <TabItem Header="Settings">
                 <local:SettingsWindow/>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Communication
@@ -30,6 +31,7 @@ namespace ImageServiceGUI.Communication
                 if (instance == null)
                 {
                     instance = new Client();
+                    Thread.Sleep(100);
                     instance.StartClient();
                 }
                 return instance;
@@ -54,9 +56,7 @@ namespace ImageServiceGUI.Communication
                     }
                 }
             });
-
             readingTask.Start();
-
         }
 
 

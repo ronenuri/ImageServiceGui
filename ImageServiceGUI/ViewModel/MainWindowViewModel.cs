@@ -11,10 +11,18 @@ namespace ImageServiceGUI.ViewModel
     {
         IMainWindowViewModel mainWindowModel;
 
-
         public MainWindowViewModel()
         {
-
+            this.mainWindowModel = new MainWindowModel();
         }
+
+        //bool IsConnected
+        //{
+        //    get
+        //    {
+        //        return this.mainWindowModel.isConnected;
+        //    }
+        //}
+   
     }
 }

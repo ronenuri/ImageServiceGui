@@ -18,14 +18,17 @@ namespace ImageServiceGUI.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string name)
+        public void NotifyPropertyChanged(string name)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ObservableCollection<string> Handlers {
-            get{ return this.settingModel.Handlers;}
-            set { this.settingModel.Handlers = new ObservableCollection<string>(value);}
+        public ObservableCollection<string> Handlers
+        {
+            get
+            {
+                return this.settingModel.Handlers;
+            }
         }
 
         private string m_chosenHandler;
@@ -35,14 +38,15 @@ namespace ImageServiceGUI.ViewModel
             set
             {
                 m_chosenHandler = value;
-                OnPropertyChanged("ChosenHandler");
+                NotifyPropertyChanged("ChosenHandler");
             }
         }
+
         public string Output
         {
             get
             {
-                return this.settingModel.Output;
+                return settingModel.Output;
             }
         }
         public string SourceName
@@ -56,7 +60,7 @@ namespace ImageServiceGUI.ViewModel
         {
             get
             {
-                return this.settingModel.LogName;
+                return settingModel.LogName;
             }
         }
         public int ThumbnailSize
@@ -69,20 +73,14 @@ namespace ImageServiceGUI.ViewModel
 
         public SettingsViewModel()
         {
+            //Handlers = new ObservableCollection<string>();
+            this.settingModel = new SettingsModel();
 
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            this.settingModel = new SettingsModel();
-            this.settingModel.PropertyChanged += OnPropertyChanged;
-
-            //Handlers = new ObservableCollection<string>();
-            //this.Handlers.Add("ssdsad");
-            this.settingModel.GetConfig();
             this.PropertyChanged += RemovePropertyChange;
-        }
+            settingModel.PropertyChanged += this.PropertyChanged;
 
-        public void updateHandler(object sender, PropertyChangedEventArgs e)
-        {
-            this.Handlers = e.
+            this.settingModel.GetConfig();
         }
 
         private void RemovePropertyChange(object sender, PropertyChangedEventArgs e)
