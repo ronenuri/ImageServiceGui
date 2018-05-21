@@ -3,6 +3,7 @@ using ImageServiceGUI.Infastructure.Logging;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WpfApplication68;
 
 namespace ImageServiceGUI.Communication
 {
@@ -19,6 +21,16 @@ namespace ImageServiceGUI.Communication
         private Client() { }
         private TcpClient client;
         private NetworkStream stream;
+        private bool isConnected;
+        public bool IsConnected
+        {
+            get
+            {
+                return this.isConnected;
+            }
+            set
+            { this.isConnected = value; }
+        }
 
         public event EventHandler<SettingsEventArgs> LoggerCommandRecievd;
         public event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
@@ -31,37 +43,50 @@ namespace ImageServiceGUI.Communication
                 if (instance == null)
                 {
                     instance = new Client();
+                    
+                    Instance.IsConnected = instance.StartClient();
                     Thread.Sleep(100);
-                    instance.StartClient();
                 }
                 return instance;
             }
         }
 
-        public void StartClient()
+        public bool StartClient()
         {
+            try { 
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
             this.client = new TcpClient();
             client.Connect(ep);
             this.stream = client.GetStream();
 
-            Task readingTask = new Task(() =>
-            {
-                BinaryReader reader = new BinaryReader(stream);
+            
+                Task readingTask = new Task(() =>
                 {
-                    while (true)
+                    BinaryReader reader = new BinaryReader(stream);
                     {
-                        string result = reader.ReadString();
-                        ParseAndSend(result);
+                        while (true)
+                        {
+                            string result = reader.ReadString();
+                            ParseAndSend(result);
+                        }
                     }
-                }
-            });
-            readingTask.Start();
+                });
+                readingTask.Start();
+                return true;
+            } catch (Exception e)
+            {
+                return false;
+            }
+            
         }
 
 
         public void SendData(string data)
         {
+            if (!IsConnected)
+            {
+                return;
+            }
             Task writingTask = new Task(() =>
             {
                 BinaryWriter writer = new BinaryWriter(this.stream);

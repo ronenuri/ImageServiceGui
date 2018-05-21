@@ -64,12 +64,14 @@ namespace ImageServiceGUI.Model
 
         public void HandlerRemoveRecived(object sender, SettingsEventArgs e)
         {
-            if (e.Message == this.ChosenHandler)
+            JObject msg = JObject.Parse(e.Message);
+            string path = msg["Directory"].ToString();
+            if (this.Handlers.Contains(path))
             {
                 App.Current.Dispatcher.Invoke((Action)delegate {
-                    Handlers.Remove(e.Message);
-                });
+                    Handlers.Remove(path);
                 NotifyPropertyChanged("Handlers");
+                });
             }
 
         }
@@ -83,7 +85,7 @@ namespace ImageServiceGUI.Model
         public void RemoveHandler(string handlerPath)
         {
             int msg = (int)Infrastructure.Enums.CommandEnum.CloseCommand;
-            this.client.SendData(msg.ToString());
+            this.client.SendData(msg.ToString() + " " + this.ChosenHandler);
 
         }
 
