@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace ImageServiceGUI.Model
             this.client = Client.Instance;
             this.client.LoggerCommandRecievd += LogRecieved;
             this.startGettingLogs = false;
-            this.logList = new List<LogMessage>();
+            this.logList = new ObservableCollection<LogMessage>();
         }
 
         protected void NotifyPropertyChanged(string name)
@@ -37,8 +38,8 @@ namespace ImageServiceGUI.Model
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private List<LogMessage> logList;
-        public List<LogMessage> LogListProp
+        private ObservableCollection<LogMessage> logList;
+        public ObservableCollection<LogMessage> LogListProp
         {
             get { return this.logList; }
             set
@@ -53,10 +54,14 @@ namespace ImageServiceGUI.Model
         {
             string log = msg.Message;
             JObject obj = JObject.Parse(log);
-            if (!this.startGettingLogs)
+            if (this.startGettingLogs)
             {
                 LogMessage logMessage = MessageToLogMessage(msg);
                 logList.Add(logMessage);
+                return;
+            }
+            if (obj["firstTime"].Equals("false") || obj["firstTime"] == null)
+            {
                 return;
             }
             if (obj["firstTime"].ToString().Equals("true"))
@@ -65,7 +70,7 @@ namespace ImageServiceGUI.Model
                     (JsonConvert.DeserializeObject<Dictionary<int, string[]>>(obj["logMap"].ToString()));
                 int i;
                 int size = map.Count;
-                for (i=0; i<size; i++)
+                for (i=1; i<size; i++)
                 {
                     string[] str = map[i];
                     string type = str[0];
@@ -73,6 +78,7 @@ namespace ImageServiceGUI.Model
                     LogMessage logMessage = new LogMessage(type, message);
                     logList.Add(logMessage);
                 }
+                LogListProp = logList;
                 startGettingLogs = true;
             }
         }
