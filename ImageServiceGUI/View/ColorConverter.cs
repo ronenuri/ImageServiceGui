@@ -16,11 +16,11 @@ namespace ImageServiceGUI.View
 
             switch ((string)value)
             {
-                case "INFO":
+                case "Info":
                     return Brushes.LightGreen;
-                case "ERROR":
+                case "Error":
                     return Brushes.Red;
-                case "WARNING":
+                case "Warning":
                     return Brushes.Yellow;
             }
             return Brushes.Violet;

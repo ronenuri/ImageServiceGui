@@ -7,7 +7,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace ImageServiceGUI.ViewModel
 {
@@ -49,6 +51,11 @@ namespace ImageServiceGUI.ViewModel
         public void NPC(object sender, PropertyChangedEventArgs e)
         {
             NotifyPropertyChanged(e.PropertyName);
+        }
+
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            //scrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta / 3);
         }
     }
 }

@@ -95,15 +95,15 @@ namespace ImageServiceGUI.Model
         {
             if (msg.Equals("Information"))
             {
-                return "INFO";
+                return "Info";
             }
             else if (msg.Equals("Warning"))
             {
-                return "WARNING";
+                return "Warning";
             }
             else
             {
-                return "ERROR";
+                return "Error";
             }
         }
 
