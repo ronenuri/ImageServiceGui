@@ -71,9 +71,11 @@
     <Compile Include="Infastructure\Enums\Enums.cs" />
     <Compile Include="Infastructure\Logging\MessageRecivedEventArgs.cs" />
     <Compile Include="Infastructure\Logging\MessageTypeEnum.cs" />
+    <Compile Include="Infastructure\LogMessage.cs" />
     <Compile Include="Infastructure\SettingsEventArgs.cs" />
-    <Compile Include="Model\IMainWindowViewModel.cs" />
+    <Compile Include="Model\IMainWindowModel.cs" />
     <Compile Include="Model\MainWindowModel.cs" />
+    <Compile Include="TextBoxOutputter.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\ColorConverter.cs" />
     <Compile Include="View\LogWindow.xaml.cs">

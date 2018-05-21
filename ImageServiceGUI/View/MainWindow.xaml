@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="Auto" Width="Auto">
     <Grid>
-        <Button Background="White">
+        <Button>
             <Button.Style>
                 <Style TargetType="Button">
+                    <Setter Property="Background" Value="White"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsConnected}" Value="False">
                             <Setter Property="Background" Value="Gray"/>

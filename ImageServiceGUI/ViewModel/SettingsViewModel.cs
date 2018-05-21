@@ -31,14 +31,13 @@ namespace ImageServiceGUI.ViewModel
             }
         }
 
-        private string m_chosenHandler;
         public string ChosenHandler
         {
             get { return settingModel.ChosenHandler; }
             set
             {
                 settingModel.ChosenHandler = value;
-                //NotifyPropertyChanged("ChosenHandler");
+                NotifyPropertyChanged("ChosenHandler");
             }
         }
 
@@ -73,7 +72,6 @@ namespace ImageServiceGUI.ViewModel
 
         public SettingsViewModel()
         {
-            //Handlers = new ObservableCollection<string>();
             this.settingModel = new SettingsModel();
 
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);

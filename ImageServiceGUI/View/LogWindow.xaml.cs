@@ -26,7 +26,11 @@ namespace ImageServiceGUI.View
         {
             InitializeComponent();
             this.DataContext = new LogViewModel();
+        }
 
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta / 3);
         }
     }
 }
