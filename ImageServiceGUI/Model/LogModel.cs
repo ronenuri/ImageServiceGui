@@ -57,7 +57,11 @@ namespace ImageServiceGUI.Model
             if (this.startGettingLogs)
             {
                 LogMessage logMessage = MessageToLogMessage(msg);
-                logList.Add(logMessage);
+                App.Current.Dispatcher.Invoke((Action)delegate
+                {
+                    //Handlers.Add(str);
+                    logList.Add(logMessage);
+                });
                 return;
             }
             if (obj["firstTime"].Equals("false") || obj["firstTime"] == null)
@@ -70,16 +74,36 @@ namespace ImageServiceGUI.Model
                     (JsonConvert.DeserializeObject<Dictionary<int, string[]>>(obj["logMap"].ToString()));
                 int i;
                 int size = map.Count;
-                for (i=1; i<size; i++)
+                for (i = 1; i < size; i++)
                 {
                     string[] str = map[i];
-                    string type = str[0];
+                    string type = GetType(str[0]);
                     string message = str[1];
                     LogMessage logMessage = new LogMessage(type, message);
-                    logList.Add(logMessage);
+                    App.Current.Dispatcher.Invoke((Action)delegate
+                    {
+                        //Handlers.Add(str);
+                        logList.Add(logMessage);
+                    });
                 }
                 LogListProp = logList;
                 startGettingLogs = true;
+            }
+        }
+
+        private string GetType(string msg)
+        {
+            if (msg.Equals("Information"))
+            {
+                return "INFO";
+            }
+            else if (msg.Equals("Warning"))
+            {
+                return "WARNING";
+            }
+            else
+            {
+                return "ERROR";
             }
         }
 

@@ -36,7 +36,7 @@ namespace ImageServiceGUI.ViewModel
             //this.PropertyChanged += NPC;
             this.logModel.GetLog();
             ////LogList = new List<LogMessage>();
-            LogList.Add(new LogMessage("INFO", "sdjvnsdkd"));
+            //LogList.Add(new LogMessage("INFO", "sdjvnsdkd"));
             //LogList.Add(new LogMessage("ERROR", "sdjvnsdkd"));
             //LogList.Add(new LogMessage("WARNING", "sdjvnsdkd"));
         }
