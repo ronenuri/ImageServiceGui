@@ -34,7 +34,7 @@ namespace ImageServiceGUI.ViewModel
 
             this.logModel = new LogModel();
 
-            this.logModel.PropertyChanged += NPC;
+            this.logModel.PropertyChanged += this.PropertyChanged ;
             //this.PropertyChanged += NPC;
             this.logModel.GetLog();
             ////LogList = new List<LogMessage>();
@@ -53,9 +53,5 @@ namespace ImageServiceGUI.ViewModel
             NotifyPropertyChanged(e.PropertyName);
         }
 
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            //scrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta / 3);
-        }
     }
 }

@@ -16,19 +16,20 @@ namespace ImageServiceGUI.View
 
             switch ((string)value)
             {
-                case "Info":
+                case "INFO":
                     return Brushes.LightGreen;
-                case "Error":
+                case "ERROR":
                     return Brushes.Red;
-                case "Warning":
+                case "WARNING":
                     return Brushes.Yellow;
             }
-            return Brushes.Violet;
+            return Brushes.LightGreen;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
     }
 }

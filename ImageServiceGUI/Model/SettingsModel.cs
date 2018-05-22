@@ -24,20 +24,10 @@ namespace ImageServiceGUI.Model
         {
             this.client = Client.Instance;
             this.m_handlers = new ObservableCollection<string>();
-            //m_handlers.Add("SHIT");
-
-            //this.client
-
-            //this.PropertyChanged += NotifyConfigRecieved;
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
             this.client.SettingsCloseHandlerRecieved += HandlerRemoveRecived;
-            //this.GetConfig();
         }
 
-        //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
-        //{
-        //    NotifyPropertyChanged(e.PropertyName);
-        //}
 
         public void SettingsConfigRecieved(object sender, SettingsEventArgs msg)
         {
@@ -57,9 +47,6 @@ namespace ImageServiceGUI.Model
                 Handlers.Add(str);
                 });
             }
-            //Handlers.Add("str");
-
-            //Handlers = list;
         }
 
         public void HandlerRemoveRecived(object sender, SettingsEventArgs e)
@@ -73,7 +60,6 @@ namespace ImageServiceGUI.Model
                 NotifyPropertyChanged("Handlers");
                 });
             }
-
         }
 
         public void GetConfig()
