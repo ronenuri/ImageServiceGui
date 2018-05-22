@@ -69,10 +69,9 @@
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\IClient.cs" />
     <Compile Include="Infastructure\Enums\Enums.cs" />
-    <Compile Include="Infastructure\Logging\MessageRecivedEventArgs.cs" />
     <Compile Include="Infastructure\Logging\MessageTypeEnum.cs" />
     <Compile Include="Infastructure\LogMessage.cs" />
-    <Compile Include="Infastructure\SettingsEventArgs.cs" />
+    <Compile Include="Infastructure\MessageEventArgs.cs" />
     <Compile Include="Model\IMainWindowModel.cs" />
     <Compile Include="Model\MainWindowModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

@@ -14,7 +14,6 @@ using System.Windows.Input;
 namespace ImageServiceGUI.ViewModel
 {
 
-
     class LogViewModel : INotifyPropertyChanged
     {
         private ILogModel logModel;
@@ -34,11 +33,6 @@ namespace ImageServiceGUI.ViewModel
             this.logModel = new LogModel();
             this.logModel.PropertyChanged += this.PropertyChanged;
             this.logModel.GetLog();
-        }
-
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            //scrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta / 3);
         }
     }
 }
