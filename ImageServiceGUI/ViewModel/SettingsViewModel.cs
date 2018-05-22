@@ -17,7 +17,7 @@ namespace ImageServiceGUI.ViewModel
         private ISettingsModel settingModel;
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+       
         public void NotifyPropertyChanged(string name)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -30,7 +30,6 @@ namespace ImageServiceGUI.ViewModel
                 return this.settingModel.Handlers;
             }
         }
-
         public string ChosenHandler
         {
             get { return settingModel.ChosenHandler; }
@@ -40,7 +39,6 @@ namespace ImageServiceGUI.ViewModel
                 NotifyPropertyChanged("ChosenHandler");
             }
         }
-
         public string Output
         {
             get
@@ -74,11 +72,10 @@ namespace ImageServiceGUI.ViewModel
         {
             this.settingModel = new SettingsModel();
 
-            this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
-            this.PropertyChanged += RemovePropertyChange;
-            settingModel.PropertyChanged += this.PropertyChanged;
+            RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
+            PropertyChanged += RemovePropertyChange;
+            this.settingModel.PropertyChanged += this.PropertyChanged;
 
-            this.settingModel.GetConfig();
         }
 
         private void RemovePropertyChange(object sender, PropertyChangedEventArgs e)
@@ -92,7 +89,6 @@ namespace ImageServiceGUI.ViewModel
         private void OnRemove(object obj)
         {
             this.settingModel.RemoveHandler(this.ChosenHandler);
-            //this.Handlers.Remove(this.ChosenHandler);
         }
 
         private bool CanRemove(object obj)

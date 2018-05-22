@@ -13,7 +13,7 @@
         <StackPanel>
             <DataGrid ItemsSource="{Binding LogList}" AutoGenerateColumns="False" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                 <DataGrid.Columns>
-                    <DataGridTextColumn FontWeight="Bold" FontSize="12" Header="Type" Width="Auto" IsReadOnly="True"  Binding="{Binding Type}">
+                    <DataGridTextColumn FontWeight="Bold" FontSize="11" Header="Type" Width="Auto" IsReadOnly="True"  Binding="{Binding Type}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Background" Value="{Binding Path=Type, Converter={StaticResource ColorConverter}}"/>

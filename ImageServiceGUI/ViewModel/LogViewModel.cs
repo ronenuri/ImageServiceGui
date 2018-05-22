@@ -31,26 +31,9 @@ namespace ImageServiceGUI.ViewModel
 
         public LogViewModel()
         {
-
             this.logModel = new LogModel();
-
-            this.logModel.PropertyChanged += NPC;
-            //this.PropertyChanged += NPC;
+            this.logModel.PropertyChanged += this.PropertyChanged;
             this.logModel.GetLog();
-            ////LogList = new List<LogMessage>();
-            //LogList.Add(new LogMessage("INFO", "sdjvnsdkd"));
-            //LogList.Add(new LogMessage("ERROR", "sdjvnsdkd"));
-            //LogList.Add(new LogMessage("WARNING", "sdjvnsdkd"));
-        }
-
-        public void NotifyPropertyChanged(string name)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public void NPC(object sender, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged(e.PropertyName);
         }
 
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

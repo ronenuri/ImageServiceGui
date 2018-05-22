@@ -43,7 +43,6 @@ namespace ImageServiceGUI.Communication
                 if (instance == null)
                 {
                     instance = new Client();
-                    
                     Instance.IsConnected = instance.StartClient();
                     Thread.Sleep(100);
                 }
@@ -67,7 +66,10 @@ namespace ImageServiceGUI.Communication
                         while (true)
                         {
                             string result = reader.ReadString();
-                            ParseAndSend(result);
+                            App.Current.Dispatcher.BeginInvoke((Action)delegate
+                            {
+                                ParseAndSend(result);
+                            });
                         }
                     }
                 });
@@ -97,6 +99,7 @@ namespace ImageServiceGUI.Communication
                 }
             });
             writingTask.Start();
+
         }
 
         public void ParseAndSend(string msg)
