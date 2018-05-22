@@ -10,7 +10,10 @@
         <local:ColorConverter x:Key="ColorConverter"></local:ColorConverter>
     </UserControl.Resources>
     <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Auto">
-        <StackPanel>
+        <StackPanel Background="White">
+        <TextBlock Foreground="Blue" FontWeight="Bold" HorizontalAlignment="Center" Margin="3" Padding="3" FontSize="30">
+            Logs
+        </TextBlock>
             <DataGrid ItemsSource="{Binding LogList}" AutoGenerateColumns="False" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                 <DataGrid.Columns>
                     <DataGridTextColumn FontWeight="Bold" FontSize="11" Header="Type" Width="Auto" IsReadOnly="True"  Binding="{Binding Type}">
@@ -25,6 +28,6 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </StackPanel>
+    </StackPanel>
     </ScrollViewer>
 </UserControl>
