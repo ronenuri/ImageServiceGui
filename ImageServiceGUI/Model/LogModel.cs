@@ -14,9 +14,7 @@ namespace ImageServiceGUI.Model
         private Client client;
         private bool startGettingLogs;
 
-
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         public LogModel()
         {
