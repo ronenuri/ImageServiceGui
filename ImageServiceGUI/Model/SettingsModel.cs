@@ -24,29 +24,42 @@ namespace ImageServiceGUI.Model
         {
             this.client = Client.Instance;
             this.m_handlers = new ObservableCollection<string>();
+
+            
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
             this.client.SettingsCloseHandlerRecieved += HandlerRemoveRecived;
+            this.GetConfig();
+
         }
 
+        //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
+        //{
+        //    NotifyPropertyChanged(e.PropertyName);
+        //}
 
         public void SettingsConfigRecieved(object sender, SettingsEventArgs msg)
         {
-            string message = msg.Message;
-            JObject obj = JObject.Parse(message);
-            Output = obj["Output"].ToString();
-            SourceName = obj["SourceName"].ToString();
-            LogName = obj["LogName"].ToString();
-            int.TryParse(obj["thumbnailSize"].ToString(), out int x);
-            ThumbnailSize = x;
+            
 
-            string[] handlerPaths = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
+
+                string message = msg.Message;
+                JObject obj = JObject.Parse(message);
+                Output = obj["Output"].ToString();
+                SourceName = obj["SourceName"].ToString();
+                LogName = obj["LogName"].ToString();
+                int.TryParse(obj["thumbnailSize"].ToString(), out int thumbnailSize);
+                ThumbnailSize = thumbnailSize;
+               string[] handlerPaths = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
+           
             ObservableCollection<string> list = new ObservableCollection<string>();
-            foreach (string str in handlerPaths)
+            
+                foreach (string str in handlerPaths)
             {
-                App.Current.Dispatcher.Invoke((Action) delegate {
-                Handlers.Add(str);
+                App.Current.Dispatcher.BeginInvoke((Action)delegate {
+                    Handlers.Add(str);
                 });
             }
+            
         }
 
         public void HandlerRemoveRecived(object sender, SettingsEventArgs e)
@@ -55,11 +68,10 @@ namespace ImageServiceGUI.Model
             string path = msg["Directory"].ToString();
             if (this.Handlers.Contains(path))
             {
-                App.Current.Dispatcher.Invoke((Action)delegate {
-                    Handlers.Remove(path);
+                Handlers.Remove(path);
                 NotifyPropertyChanged("Handlers");
-                });
             }
+
         }
 
         public void GetConfig()

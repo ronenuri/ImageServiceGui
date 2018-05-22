@@ -19,7 +19,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <TabControl>
+        <TabControl FontSize="15">
             <TabItem Header="Settings">
                 <local:SettingsWindow/>
             </TabItem>
