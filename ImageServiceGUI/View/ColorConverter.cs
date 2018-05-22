@@ -26,12 +26,13 @@ namespace ImageServiceGUI.View
                 case "WARNING":
                     return Brushes.Yellow;
             }
-            return Brushes.Violet;
+            return Brushes.LightGreen;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+
     }
 }
