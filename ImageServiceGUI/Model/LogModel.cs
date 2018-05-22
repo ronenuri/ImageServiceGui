@@ -1,18 +1,11 @@
 ﻿using ImageServiceGUI.Communication;
 using ImageServiceGUI.Infastructure;
-using ImageServiceGUI.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Model
 {
@@ -50,7 +43,7 @@ namespace ImageServiceGUI.Model
         }
 
 
-        public void LogRecieved(object sender, SettingsEventArgs msg)
+        public void LogRecieved(object sender, MessageEventArgs msg)
         {
             string log = msg.Message;
             JObject obj = JObject.Parse(log);
@@ -115,7 +108,7 @@ namespace ImageServiceGUI.Model
         }
 
 
-        private LogMessage MessageToLogMessage(SettingsEventArgs msg)
+        private LogMessage MessageToLogMessage(MessageEventArgs msg)
         {
             JObject obj = JObject.Parse(msg.Message);
             string[] str = JsonConvert.DeserializeObject<string[]>(obj["logValue"].ToString());

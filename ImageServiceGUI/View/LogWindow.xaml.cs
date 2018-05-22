@@ -28,7 +28,7 @@ namespace ImageServiceGUI.View
             this.DataContext = new LogViewModel();
         }
 
-        // Fix for datagrid to scroll with mouse wheel, Dor said it's fine!
+        // Simple fix for datagrid to be able to scroll with mouse wheel, Dor said it's fine!
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta / 3);

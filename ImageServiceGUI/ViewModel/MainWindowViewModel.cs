@@ -1,10 +1,5 @@
 ﻿using ImageServiceGUI.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageServiceGUI.ViewModel
 {
@@ -19,6 +14,7 @@ namespace ImageServiceGUI.ViewModel
         }
 
         IMainWindowModel mainWindowModel;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string name)
@@ -30,8 +26,6 @@ namespace ImageServiceGUI.ViewModel
         {
             this.mainWindowModel = new MainWindowModel();
             this.mainWindowModel.PropertyChanged += this.PropertyChanged;
-            
         }
-
     }
 }

@@ -15,6 +15,9 @@ using WpfApplication68;
 
 namespace ImageServiceGUI.Communication
 {
+    /// <summary>
+    /// Our communication client singelton
+    /// </summary>
     public class Client : IClient
     {
         private static Client instance;
@@ -32,9 +35,10 @@ namespace ImageServiceGUI.Communication
             { this.isConnected = value; }
         }
 
-        public event EventHandler<SettingsEventArgs> LoggerCommandRecievd;
-        public event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
-        public event EventHandler<SettingsEventArgs> SettingsCloseHandlerRecieved;
+        //Events for each gui tab and part
+        public event EventHandler<MessageEventArgs> LoggerCommandRecievd;
+        public event EventHandler<MessageEventArgs> SettingsConfigRecieved;
+        public event EventHandler<MessageEventArgs> SettingsCloseHandlerRecieved;
 
         public static Client Instance
         {
@@ -43,6 +47,7 @@ namespace ImageServiceGUI.Communication
                 if (instance == null)
                 {
                     instance = new Client();
+                    // Creating a connection
                     Instance.IsConnected = instance.StartClient();
                     Thread.Sleep(100);
                 }
@@ -50,15 +55,19 @@ namespace ImageServiceGUI.Communication
             }
         }
 
+        /// <summary>
+        /// Starting our clients connection with the server
+        /// </summary>
+        /// <returns>Bool whether or not connection was successfull</returns>
         public bool StartClient()
         {
-            try { 
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
-            this.client = new TcpClient();
-            client.Connect(ep);
-            this.stream = client.GetStream();
-
-            
+            try
+            {
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+                this.client = new TcpClient();
+                client.Connect(ep);
+                this.stream = client.GetStream();
+                // Creating a seprate reading task always listening to the server
                 Task readingTask = new Task(() =>
                 {
                     BinaryReader reader = new BinaryReader(stream);
@@ -66,6 +75,7 @@ namespace ImageServiceGUI.Communication
                         while (true)
                         {
                             string result = reader.ReadString();
+                            // Sending each result to be handled by the correct GUI tab
                             App.Current.Dispatcher.BeginInvoke((Action)delegate
                             {
                                 ParseAndSend(result);
@@ -74,51 +84,60 @@ namespace ImageServiceGUI.Communication
                     }
                 });
                 readingTask.Start();
+                // Returning connection was successfull
                 return true;
-            } catch
+            }
+            catch
             {
                 return false;
             }
-            
+
         }
 
-
+        /// <summary>
+        /// Sending comands to our server
+        /// </summary>
+        /// <param name="data"> String of the clients command</param>
         public void SendData(string data)
         {
             if (!IsConnected)
             {
                 return;
             }
+            // Creating a writing task sending the command to the server
             Task writingTask = new Task(() =>
             {
                 BinaryWriter writer = new BinaryWriter(this.stream);
                 {
-                        // Send data to server
-                        writer.Write(data);
-                        writer.Flush();
+                    // Send data to server
+                    writer.Write(data);
+                    writer.Flush();
                 }
             });
             writingTask.Start();
-
         }
 
+        /// <summary>
+        /// Parsing each server message and notyfing the appropriate class
+        /// </summary>
+        /// <param name="msg"></param>
         public void ParseAndSend(string msg)
         {
+            // Parsing our jobjects command enum
             JObject obj = JObject.Parse(msg);
-            int.TryParse(obj["CommandEnum"].ToString(), out int x);
-            if (x == (int)Infrastructure.Enums.CommandEnum.GetConfigCommand)
+            int.TryParse(obj["CommandEnum"].ToString(), out int command);
+            MessageEventArgs e = new MessageEventArgs((int)Infrastructure.Enums.CommandEnum.GetConfigCommand, msg);
+            // Sending the server message to the right gui tab via event
+            if (command == (int)Infrastructure.Enums.CommandEnum.GetConfigCommand)
             {
-                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.GetConfigCommand, msg);
                 SettingsConfigRecieved?.Invoke(this, e);
             }
-            else if (x == (int)Infrastructure.Enums.CommandEnum.LogCommand)
+            else if (command == (int)Infrastructure.Enums.CommandEnum.LogCommand)
             {
-                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.LogCommand, msg);
                 LoggerCommandRecievd?.Invoke(this, e);
             }
-            else if(x == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
+            else if (command == (int)Infrastructure.Enums.CommandEnum.CloseCommand)
             {
-                SettingsEventArgs e = new SettingsEventArgs((int)Infrastructure.Enums.CommandEnum.CloseCommand, msg);
                 SettingsCloseHandlerRecieved?.Invoke(this, e);
             }
         }

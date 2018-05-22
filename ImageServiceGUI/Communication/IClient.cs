@@ -12,8 +12,8 @@ namespace ImageServiceGUI.Communication
     {
         void SendData(string data);
 
-        event EventHandler<SettingsEventArgs> LoggerCommandRecievd;
-        event EventHandler<SettingsEventArgs> SettingsConfigRecieved;
-        event EventHandler<SettingsEventArgs> SettingsCloseHandlerRecieved;
+        event EventHandler<MessageEventArgs> LoggerCommandRecievd;
+        event EventHandler<MessageEventArgs> SettingsConfigRecieved;
+        event EventHandler<MessageEventArgs> SettingsCloseHandlerRecieved;
     }
 }

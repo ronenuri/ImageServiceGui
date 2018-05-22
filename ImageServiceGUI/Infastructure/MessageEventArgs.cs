@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGUI.Infastructure
 {
-    public class SettingsEventArgs : EventArgs
+    public class MessageEventArgs : EventArgs
     {
         public int CommandID { get; set; }
         public string Message { get; set; }
 
-        public SettingsEventArgs(int id, string msg)
+        public MessageEventArgs(int id, string msg)
         {
             CommandID = id;
             Message = msg;
