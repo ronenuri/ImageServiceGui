@@ -24,71 +24,76 @@ namespace ImageServiceGUI.Model
         {
             this.client = Client.Instance;
             this.m_handlers = new ObservableCollection<string>();
-            //m_handlers.Add("SHIT");
-
-            //this.client
-
-            //this.PropertyChanged += NotifyConfigRecieved;
             this.client.SettingsConfigRecieved += SettingsConfigRecieved;
             this.client.SettingsCloseHandlerRecieved += HandlerRemoveRecived;
-            //this.GetConfig();
+            this.GetConfig();
         }
 
-        //public void NotifyConfigRecieved(Object sender, PropertyChangedEventArgs e)
-        //{
-        //    NotifyPropertyChanged(e.PropertyName);
-        //}
-
-        public void SettingsConfigRecieved(object sender, SettingsEventArgs msg)
+        /// <summary>
+        /// Updating our settings configuration
+        /// </summary>
+        /// <param name="sender"> Event sender</param>
+        /// <param name="msg"> The message recived from server</param>
+        public void SettingsConfigRecieved(object sender, MessageEventArgs msg)
         {
+            // Parsing our message
             string message = msg.Message;
             JObject obj = JObject.Parse(message);
+            // Updating each configuratoin field
             Output = obj["Output"].ToString();
             SourceName = obj["SourceName"].ToString();
             LogName = obj["LogName"].ToString();
-            int.TryParse(obj["thumbnailSize"].ToString(), out int x);
-            ThumbnailSize = x;
-
+            int.TryParse(obj["thumbnailSize"].ToString(), out int thumbnailSize);
+            ThumbnailSize = thumbnailSize;
+            // Parsing our handlerPaths
             string[] handlerPaths = JsonConvert.DeserializeObject<string[]>(obj["handlersPaths"].ToString());
-            ObservableCollection<string> list = new ObservableCollection<string>();
+            // Adding each one to our observable collection list
             foreach (string str in handlerPaths)
             {
-                App.Current.Dispatcher.Invoke((Action) delegate {
-                Handlers.Add(str);
+                App.Current.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    Handlers.Add(str);
                 });
             }
-            //Handlers.Add("str");
-
-            //Handlers = list;
         }
 
-        public void HandlerRemoveRecived(object sender, SettingsEventArgs e)
+        /// <summary>
+        /// Removing a handler
+        /// </summary>
+        /// <param name="sender"> Event sender</param>
+        /// <param name="e">The handler path to be removed</param>
+        public void HandlerRemoveRecived(object sender, MessageEventArgs e)
         {
             JObject msg = JObject.Parse(e.Message);
             string path = msg["Directory"].ToString();
+            // Checking if the path is indeed on the list and removing it
             if (this.Handlers.Contains(path))
             {
-                App.Current.Dispatcher.Invoke((Action)delegate {
-                    Handlers.Remove(path);
+                Handlers.Remove(path);
                 NotifyPropertyChanged("Handlers");
-                });
             }
 
         }
 
+        /// <summary>
+        /// Sending the server the configuration command
+        /// </summary>
         public void GetConfig()
         {
             int msg = (int)Infrastructure.Enums.CommandEnum.GetConfigCommand;
             this.client.SendData(msg.ToString());
         }
 
+        /// <summary>
+        /// Sending the server to remove a handler
+        /// </summary>
+        /// <param name="handlerPath"> The handlers path</param>
         public void RemoveHandler(string handlerPath)
         {
             int msg = (int)Infrastructure.Enums.CommandEnum.CloseCommand;
             this.client.SendData(msg.ToString() + " " + this.ChosenHandler);
 
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string name)
@@ -161,7 +166,6 @@ namespace ImageServiceGUI.Model
                 NotifyPropertyChanged("ThumbnailSize");
             }
         }
-
     }
 }
 

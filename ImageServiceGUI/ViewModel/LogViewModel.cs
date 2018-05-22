@@ -1,20 +1,10 @@
 ﻿using ImageServiceGUI.Infastructure;
 using ImageServiceGUI.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 
 namespace ImageServiceGUI.ViewModel
 {
-
-
     class LogViewModel : INotifyPropertyChanged
     {
         private ILogModel logModel;
@@ -29,33 +19,16 @@ namespace ImageServiceGUI.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Constructor of the LogVM
+        /// </summary>
         public LogViewModel()
         {
-
             this.logModel = new LogModel();
-
-            this.logModel.PropertyChanged += NPC;
-            //this.PropertyChanged += NPC;
+            //put the event handler of this class in the model eventHandler
+            this.logModel.PropertyChanged += this.PropertyChanged;
+            // asks for all the logs configurations
             this.logModel.GetLog();
-            ////LogList = new List<LogMessage>();
-            //LogList.Add(new LogMessage("INFO", "sdjvnsdkd"));
-            //LogList.Add(new LogMessage("ERROR", "sdjvnsdkd"));
-            //LogList.Add(new LogMessage("WARNING", "sdjvnsdkd"));
-        }
-
-        public void NotifyPropertyChanged(string name)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public void NPC(object sender, PropertyChangedEventArgs e)
-        {
-            NotifyPropertyChanged(e.PropertyName);
-        }
-
-        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            //scrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta / 3);
         }
     }
 }

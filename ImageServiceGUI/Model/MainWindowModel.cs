@@ -13,9 +13,9 @@ namespace ImageServiceGUI.Model
     {
         private Client client;
 
-
         public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged (string name)
+
+        public void NotifyPropertyChanged(string name)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -38,9 +38,8 @@ namespace ImageServiceGUI.Model
         public MainWindowModel()
         {
             this.client = Client.Instance;
+            // Getting information whether connection was sucessfull or not
             this.IsConnected = client.IsConnected;
         }
-
-
     }
 }
