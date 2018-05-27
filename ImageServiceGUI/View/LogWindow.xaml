@@ -8,12 +8,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <local:ColorConverter x:Key="ColorConverter"></local:ColorConverter>
+        <Style x:Key="niceHeadline">
+            <Setter Property="TextBlock.FontSize" Value="30" />
+            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+            <Setter Property="TextBlock.Background" Value="LightBlue" />
+            <Setter Property="TextBlock.FontWeight" Value="ExtraBlack" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.Height" Value="50" />
+        </Style>
     </UserControl.Resources>
     <ScrollViewer Name="scrollViewer" VerticalScrollBarVisibility="Auto">
         <StackPanel>
-        <TextBlock Foreground="White" Background="LightSeaGreen" FontWeight="ExtraBold" TextAlignment="Center" FontSize="30" Height="50">
-            Logs
-        </TextBlock>
+            <TextBlock Text="Logs" Style="{StaticResource niceHeadline}" />
             <DataGrid VerticalAlignment="Stretch" ItemsSource="{Binding LogList}" AutoGenerateColumns="False" PreviewMouseWheel="DataGrid_PreviewMouseWheel">
                 <DataGrid.Columns>
                     <DataGridTextColumn FontWeight="Bold" FontSize="11" Header="Type" Width="Auto" IsReadOnly="True"  Binding="{Binding Type}">
